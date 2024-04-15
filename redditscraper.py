@@ -3,7 +3,7 @@ from config import SUBREDDIT_PAGE_URL
 from config import MEDIA_URLS_PATH
 from config import API_KEY
 from scrapy.crawler import CrawlerProcess
-#TO DO: change xpath; works only sometimes
+#TO DO: change xpath; bugs out sometimes
 #TO DO: scrape photos; easy low priorty
 class RedditspiderSpider(scrapy.Spider):
     name = "redditspider"
