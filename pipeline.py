@@ -7,9 +7,9 @@ import time
 from config import CLIENT_PATH
 from youtube_upload.client import YoutubeUploader
 
-DIRECTORY = r'.\redditscrapy\processed_media'
+DIRECTORY = r'.\REDDIT_YT_BOT\processed_media'
 
-# file_path = r"C:\Users\Abdulla\Documents\coding\reddit_scrapy\redditscrapy\downloaded_media\3_combined.mp4"
+
 def UploadVideo(file_path,title):
     uploader = YoutubeUploader(secrets_file_path=CLIENT_PATH)
     uploader.authenticate()
