@@ -2,6 +2,7 @@ import scrapy
 from config import SUBREDDIT_PAGE_URL
 from config import MEDIA_URLS_PATH
 from config import API_KEY
+from config import page_limit
 from scrapy.crawler import CrawlerProcess
 #TO DO: change xpath; bugs out sometimes
 #TO DO: scrape photos; easy low priorty
@@ -9,17 +10,22 @@ class RedditspiderSpider(scrapy.Spider):
     name = "redditspider"
     allowed_domains = ["old.reddit.com"]
     start_urls = [SUBREDDIT_PAGE_URL]
+    
 
-    def parse(self, response):
-        media_links = response.xpath("//a[@data-event-action='thumbnail']/@href")
-
+    def parse(self, response):   
+        global page_limit   #used to count number of recursions
+        media_links = response.xpath("//a[@data-event-action='thumbnail']/@href") #get all the links(from the thumbnails)
+        
         for link in media_links:
-            # count += 1
             yield {
-                'url': link.get()
+                'url': link.get() #get them one by one
             }
-            # if count == 4:
-            #     break
+
+        page_limit -= 1
+        next_page = response.xpath("//span[@class='next-button'][1]/a[1]/@href").get()  #get next page link
+        if not page_limit == 0:     
+            yield response.follow(next_page, callback= self.parse)  #recurse and for next page
+        
 
 def main():
     process = CrawlerProcess(
