@@ -1,0 +1,7 @@
+.venv/
+redditdata.csv
+client_secrets.json
+downloaded_media/*
+processed_media/*
+__pychache__/
+config.py
